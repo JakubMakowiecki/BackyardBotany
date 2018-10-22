@@ -30,7 +30,7 @@ public class SearchActivity extends AppCompatActivity {
 
         //save("ex2.txt", "asjdgbsakgbslkdglkarbjlakb");
 
-        load("ex2.txt");
+        load("rose.txt");
 
         //mEditText = findViewById(R.id.edit_text);
 
