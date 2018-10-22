@@ -1,9 +1,18 @@
 package com.example.qbook.backyardbotany;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.Objects;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -12,11 +21,90 @@ public class SearchActivity extends AppCompatActivity {
 //        System.loadLibrary("native-lib");
 //    }
 
+    EditText mEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        //save("ex2.txt", "asjdgbsakgbslkdglkarbjlakb");
+
+        load("ex2.txt");
+
+        //mEditText = findViewById(R.id.edit_text);
+
+    }
+    public void save(String name, String text) {
+        //String text = mEditText.getText().toString();
+        //String text = "TESTSETSETSETSTSETSE";
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(name, MODE_PRIVATE);
+            fos.write(text.getBytes());
+
+            String absFilePath = getFilesDir() + "/" + name;
+
+            //mEditText.getText().clear();
+
+            Toast.makeText( this,  "Saved to " + absFilePath, Toast.LENGTH_LONG).show();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void load(String fileName) {
+        FileInputStream fis = null;
+
+        String absFilePath = getFilesDir() + "/" + fileName;
+
+
+        try {
+            fis = openFileInput(fileName);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+
+            while ((text = br.readLine()) != null)
+            {
+                sb.append(text).append("\n");
+            }
+
+            //mEditText.setText(sb.toString());
+
+
+            Toast.makeText( this,  "Loaded: " + sb.toString(), Toast.LENGTH_LONG).show();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
 //        // Example of a call to a native method
 //        TextView tv = (TextView) findViewById(R.id.sample_text);
 //        tv.setText(stringFromJNI());
@@ -27,4 +115,4 @@ public class SearchActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     //public native String stringFromJNI();
-}
+
