@@ -78,15 +78,44 @@ public class SearchActivity extends AppCompatActivity {
             StringBuilder sb = new StringBuilder();
             String text;
 
-            while ((text = br.readLine()) != null)
+            String name;
+            StringBuilder sbName = new StringBuilder();
+            String info;
+            StringBuilder sbInfo = new StringBuilder();
+            String tips;
+            StringBuilder sbTips = new StringBuilder();
+            String imgFilepath;
+            StringBuilder sbimgFilepath = new StringBuilder();
+
+            if((text = br.readLine()) != null)
+                name = sbName.append(text).toString();
+            else
+                name = "";
+
+            if((text = br.readLine()) != null)
+                info = sbInfo.append(text).toString();
+            else
+                info = "";
+
+            if((text = br.readLine()) != null)
+                tips = sbTips.append(text).toString();
+            else
+                tips = "";
+
+            if((text = br.readLine()) != null)
+                imgFilepath = sbimgFilepath.append(text).toString();
+            else
+                imgFilepath = "";
+
+            /*while ((text = br.readLine()) != null)
             {
                 sb.append(text).append("\n");
-            }
+            }*/
 
             //mEditText.setText(sb.toString());
 
 
-            Toast.makeText( this,  "Loaded: " + sb.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText( this,  "Loaded: " + info, Toast.LENGTH_LONG).show();
 
 
         } catch (FileNotFoundException e) {
