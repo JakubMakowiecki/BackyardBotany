@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".SearchPage_Activity">
+
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="181dp"
+        android:layout_height="105dp"
+        app:srcCompat="@mipmap/ic_logo_full"
+        tools:layout_editor_absoluteX="102dp"
+        tools:layout_editor_absoluteY="104dp" />
+
+    <Button
+        android:id="@+id/SearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        tools:layout_editor_absoluteX="225dp"
+        tools:layout_editor_absoluteY="299dp"
+        android:onClick="skip"/>
+
+    <TextView
+        android:id="@+id/InputText"
+        android:layout_width="219dp"
+        android:layout_height="24dp"
+        tools:layout_editor_absoluteX="83dp"
+        tools:layout_editor_absoluteY="243dp" />
+
+</android.support.constraint.ConstraintLayout>

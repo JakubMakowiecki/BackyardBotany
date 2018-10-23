@@ -9,13 +9,16 @@
         android:roundIcon="@mipmap/ic_logo_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchActivity">
+
+        <activity android:name=".SearchPage_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ResultPage_Activity" />
+
     </application>
 
 </manifest>

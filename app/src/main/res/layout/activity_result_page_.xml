@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ResultPage_Activity">
+
+    <ImageView
+        android:id="@+id/Picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_foreground_logo_icon"
+        tools:layout_editor_absoluteX="57dp"
+        tools:layout_editor_absoluteY="52dp" />
+
+    <TextView
+        android:id="@+id/Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FlowerName"
+        tools:layout_editor_absoluteX="72dp"
+        tools:layout_editor_absoluteY="185dp" />
+
+    <TextView
+        android:id="@+id/Description"
+        android:layout_width="111dp"
+        android:layout_height="150dp"
+        android:text="Description"
+        tools:layout_editor_absoluteX="65dp"
+        tools:layout_editor_absoluteY="252dp" />
+
+    <TextView
+        android:id="@+id/Tips"
+        android:layout_width="146dp"
+        android:layout_height="350dp"
+        android:text="Tips"
+        tools:layout_editor_absoluteX="223dp"
+        tools:layout_editor_absoluteY="52dp" />
+</android.support.constraint.ConstraintLayout>
