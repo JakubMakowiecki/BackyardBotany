@@ -7,32 +7,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".SearchPage_Activity">
-
+    tools:context=".SearchPage_Activity"
+    tools:layout_editor_absoluteY="81dp">
 
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="181dp"
-        android:layout_height="105dp"
-        app:srcCompat="@mipmap/ic_logo_full"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="104dp" />
+        android:layout_height="0dp"
+        android:layout_marginTop="104dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_logo_full" />
 
     <Button
         android:id="@+id/SearchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="71dp"
+        android:layout_marginBottom="164dp"
+        android:onClick="skip"
         android:text="Search"
-        tools:layout_editor_absoluteX="225dp"
-        tools:layout_editor_absoluteY="299dp"
-        android:onClick="skip"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
-    <TextView
-        android:id="@+id/InputText"
-        android:layout_width="219dp"
-        android:layout_height="24dp"
-        tools:layout_editor_absoluteX="83dp"
-        tools:layout_editor_absoluteY="243dp" />
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="234dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="23dp"
+        app:layout_constraintBottom_toTopOf="@+id/SearchButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

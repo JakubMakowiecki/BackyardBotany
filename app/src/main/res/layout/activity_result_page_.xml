@@ -4,37 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ResultPage_Activity">
+    tools:context=".ResultPage_Activity"
+    tools:layout_editor_absoluteY="81dp">
 
     <ImageView
         android:id="@+id/Picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_foreground_logo_icon"
-        tools:layout_editor_absoluteX="57dp"
-        tools:layout_editor_absoluteY="52dp" />
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/Name"
+        app:layout_constraintEnd_toStartOf="@+id/Tips"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_foreground_logo_icon" />
+
 
     <TextView
         android:id="@+id/Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="43dp"
         android:text="FlowerName"
-        tools:layout_editor_absoluteX="72dp"
-        tools:layout_editor_absoluteY="185dp" />
+        app:layout_constraintBottom_toTopOf="@+id/Description"
+        app:layout_constraintEnd_toEndOf="@+id/Picture"
+        app:layout_constraintTop_toBottomOf="@+id/Picture" />
 
     <TextView
         android:id="@+id/Description"
-        android:layout_width="111dp"
-        android:layout_height="150dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="107dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="118dp"
         android:text="Description"
-        tools:layout_editor_absoluteX="65dp"
-        tools:layout_editor_absoluteY="252dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Tips"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Name" />
 
     <TextView
         android:id="@+id/Tips"
-        android:layout_width="146dp"
+        android:layout_width="0dp"
         android:layout_height="350dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="59dp"
         android:text="Tips"
-        tools:layout_editor_absoluteX="223dp"
-        tools:layout_editor_absoluteY="52dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Description"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
