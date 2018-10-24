@@ -30,6 +30,9 @@ public class SearchActivity extends AppCompatActivity {
 
         startDB();
 
+        search("Tuilips");
+
+
         //load("gasdgasdgasd.txt");
         //create("testItem", "this is info", "dont water");
 
@@ -52,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
 
             //mEditText.getText().clear();
 
-            Toast.makeText( this,  "Saved to " + absFilePath, Toast.LENGTH_LONG).show();
+            //Toast.makeText( this,  "Saved to " + absFilePath, Toast.LENGTH_LONG).show();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -78,6 +81,11 @@ public class SearchActivity extends AppCompatActivity {
 
         try {
             fis = openFileInput(fileName);
+            if (fis == null)
+            {
+                retValue = false;
+            }
+
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
@@ -120,7 +128,7 @@ public class SearchActivity extends AppCompatActivity {
             //mEditText.setText(sb.toString());
 
 
-            Toast.makeText( this,  "Loaded: " + info, Toast.LENGTH_LONG).show();
+            //Toast.makeText( this,  "Loaded: " + name, Toast.LENGTH_LONG).show();
 
 
         } catch (FileNotFoundException e) {
@@ -136,10 +144,6 @@ public class SearchActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            else {
-                retValue = false;
-
-            }
         }
 
         return retValue;
@@ -149,10 +153,24 @@ public class SearchActivity extends AppCompatActivity {
     {
         if (!load(name))
         {
-            Toast.makeText( this,  "creating " + name , Toast.LENGTH_LONG).show();
+            //Toast.makeText( this,  "creating " + name , Toast.LENGTH_LONG).show();
 
             save(name,info,tips);
         }
+    }
+
+    public boolean search(String name)
+    {
+        boolean retVal = false;
+
+        if (load(name))
+        {
+            Toast.makeText( this,  "Found: " + name, Toast.LENGTH_LONG).show();
+
+            retVal = true;
+        }
+
+        return retVal;
     }
 
     public void startDB()
