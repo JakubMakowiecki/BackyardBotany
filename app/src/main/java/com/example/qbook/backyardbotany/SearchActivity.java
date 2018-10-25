@@ -1,5 +1,6 @@
 package com.example.qbook.backyardbotany;
 
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,61 +11,77 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class SearchActivity extends AppCompatActivity {
-    private EditText name, stunum, specialty;
-    private Button add, update, remove, show;
-    private TextView showin;
     private MyDBHelper helper;
     private SQLiteDatabase mydb;
+    private EditText edit1, edit2, edit3, edit4, edit5, edit6;
+    private Button button1, button2, button3, button4;
+    private TextView tv10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        name = (EditText) findViewById(R.id.name);
-        stunum = (EditText) findViewById(R.id.stunum);
-        specialty = (EditText) findViewById(R.id.specialty);
-        add = (Button) findViewById(R.id.add);
-        update = (Button) findViewById(R.id.update);
-        remove = (Button) findViewById(R.id.remove);
-        show = (Button) findViewById(R.id.show);
-        showin = (TextView) findViewById(R.id.showin);
+        this.initDB();
+        this.initViews();
+        this.initListeners();
+    }
+
+    private void initDB() {
         helper = new MyDBHelper(SearchActivity.this);
         mydb = helper.getWritableDatabase();
-        add.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void initViews() {
+        edit1 = (EditText) findViewById(R.id.edit01);
+        edit2 = (EditText) findViewById(R.id.edit02);
+        edit3 = (EditText) findViewById(R.id.edit03);
+        edit4 = (EditText) findViewById(R.id.edit04);
+        edit5 = (EditText) findViewById(R.id.edit05);
+        edit6 = (EditText) findViewById(R.id.edit06);
+        button1 = (Button) findViewById(R.id.button01);
+        button2 = (Button) findViewById(R.id.button02);
+        button3 = (Button) findViewById(R.id.button03);
+        button4 = (Button) findViewById(R.id.button04);
+        tv10 = (TextView) findViewById(R.id.text10);
+    }
+
+    private void initListeners() {
+        button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int stunum1 = Integer.parseInt(stunum.getText().toString());
-                String name1 = name.getText().toString();
-                String specialty1 = specialty.getText().toString();
-                insertData(stunum1, name1, specialty1);
-                name.setText("");
-                stunum.setText("");
-                specialty.setText("");
-                Toast.makeText(SearchActivity.this, "插入数据成功", Toast.LENGTH_SHORT).show();
+                String name = edit1.getText().toString();
+                String description = edit2.getText().toString();
+                String tip = edit3.getText().toString();
+                insertData(name, description, tip);
+                edit1.setText("");
+                edit2.setText("");
+                edit3.setText("");
+                Toast.makeText(SearchActivity.this, "Add Data Successfully", Toast.LENGTH_SHORT).show();
             }
         });
-        update.setOnClickListener(new View.OnClickListener() {
+        button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int stunum1 = Integer.parseInt(stunum.getText().toString());
-                String spcialty1 = specialty.getText().toString();
-                updateData(stunum1, spcialty1);
-                stunum.setText("");
-                specialty.setText("");
-                Toast.makeText(SearchActivity.this, "修改数据成功", Toast.LENGTH_SHORT).show();
+                String name = edit4.getText().toString();
+                String tip = edit5.getText().toString();
+                updateData(name, tip);
+                edit4.setText("");
+                edit5.setText("");
+                Toast.makeText(SearchActivity.this, "Modify Data Successfully", Toast.LENGTH_SHORT).show();
             }
         });
-        remove.setOnClickListener(new View.OnClickListener() {
+        button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int stunum1 = Integer.parseInt(stunum.getText().toString());
-                removeData(stunum1);
-                stunum.setText("");
-                Toast.makeText(SearchActivity.this, "删除数据成功", Toast.LENGTH_SHORT).show();
+                String name = edit6.getText().toString();
+                removeData(name);
+                edit6.setText("");
+                Toast.makeText(SearchActivity.this, "Delete Data Successfully", Toast.LENGTH_SHORT).show();
             }
         });
-        show.setOnClickListener(new View.OnClickListener() {
+        button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 queryData();
@@ -72,37 +89,37 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private void insertData(int stunum, String name, String specialty) {
-        String sql = "INSERT INTO " + "students" + " (stunum,name,specialty) VALUES (" + stunum + ",'" + name + "'," + specialty + ")";
+    private void insertData(String name, String description, String tip) {
+        String sql = "INSERT INTO " + helper.TABLE_NAME + " (name,description,tip) VALUES ('" + name + "','" + description + "','" + tip + "')";
         mydb.execSQL(sql);
     }
 
-    private void updateData(int stunum, String specialty) {
-        String sql = "UPDATE " + "students" + " SET specialty=" + specialty + " WHERE stunum=" + stunum;
+    private void updateData(String name, String tip) {
+        String sql = "UPDATE " + helper.TABLE_NAME + " SET tip='" + tip + "' WHERE name= '" + name + "'";
         mydb.execSQL(sql);
     }
 
-    private void removeData(int stunum) {
-        String sql = "DELETE FROM " + "students" + " WHERE stunum=" + stunum;
+    private void removeData(String name) {
+        String sql = "DELETE FROM " + helper.TABLE_NAME + " WHERE name='" + name + "'";
         mydb.execSQL(sql);
     }
 
     private void queryData() {
-        String sql = "SELECT * FROM " + "students";
+        String sql = "SELECT * FROM " + helper.TABLE_NAME;
         Cursor cursor = mydb.rawQuery(sql, null);
         String result = null;
         if (cursor.getCount() == 0) {
-            result = "无数据";
+            result = "No Data Now";
         } else {
             result = "";
             while (cursor.moveToNext()) {
-                int stunum = cursor.getInt(0);
-                String name = cursor.getString(1);
-                String specialty = cursor.getString(2);
-                String temp = "学号：" + stunum + ",  姓名：" + name + ",  专业：" + specialty + "\n";
+                String name = cursor.getString(0);
+                String description = cursor.getString(1);
+                String tip = cursor.getString(2);
+                String temp = "Flower name：" + name + "\n" + "Description： " + description + "\n" + "Tip：" + tip + "\n";
                 result += temp;
             }
         }
-        showin.setText(result);
+        tv10.setText(result);
     }
 }
