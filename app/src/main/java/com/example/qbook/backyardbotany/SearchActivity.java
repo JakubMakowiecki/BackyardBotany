@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 
 public class SearchActivity extends AppCompatActivity {
@@ -30,11 +31,8 @@ public class SearchActivity extends AppCompatActivity {
 
         startDB();
 
-        search("Tuilips");
+        search("Tulips");
 
-
-        //load("gasdgasdgasd.txt");
-        //create("testItem", "this is info", "dont water");
 
         //mEditText = findViewById(R.id.edit_text);
 
@@ -72,19 +70,13 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    public boolean load(String fileName) {
-        boolean retValue = true;
+    public itemData load(String fileName) {
+        itemData retValue = new itemData("","","","");
         FileInputStream fis = null;
-
-        String absFilePath = getFilesDir() + "/" + fileName;
 
 
         try {
-            fis = openFileInput(fileName);
-            if (fis == null)
-            {
-                retValue = false;
-            }
+            fis = openFileInput(fileName + ".txt");
 
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
@@ -120,15 +112,16 @@ public class SearchActivity extends AppCompatActivity {
             else
                 imgFilepath = "";
 
-            /*while ((text = br.readLine()) != null)
-            {
-                sb.append(text).append("\n");
-            }*/
 
             //mEditText.setText(sb.toString());
 
 
             //Toast.makeText( this,  "Loaded: " + name, Toast.LENGTH_LONG).show();
+
+            retValue.name = name;
+            retValue.info = info;
+            retValue.tips = tips;
+            retValue.imgFilepath = imgFilepath;
 
 
         } catch (FileNotFoundException e) {
@@ -151,7 +144,7 @@ public class SearchActivity extends AppCompatActivity {
 
     public void create(String name, String info, String tips)
     {
-        if (!load(name))
+        if (!Objects.equals(load(name).tips, ""))
         {
             //Toast.makeText( this,  "creating " + name , Toast.LENGTH_LONG).show();
 
@@ -163,9 +156,9 @@ public class SearchActivity extends AppCompatActivity {
     {
         boolean retVal = false;
 
-        if (load(name))
+        if (!Objects.equals(load(name).tips, ""))
         {
-            Toast.makeText( this,  "Found: " + name, Toast.LENGTH_LONG).show();
+            //Toast.makeText( this,  "Found: " + load(name).tips, Toast.LENGTH_LONG).show();
 
             retVal = true;
         }
