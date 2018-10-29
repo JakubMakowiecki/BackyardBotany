@@ -3,12 +3,12 @@ package com.example.qbook.backyardbotany;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -34,11 +34,13 @@ public class SearchPage_Activity extends AppCompatActivity {
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                //if (event.getAction() != KeyEvent.ACTION_DOWN) {
                 String query = editText.getText().toString();
-                ItemData result = performSearch(query);
-                goToNextPage(result);
-                //}
+                if (checkIfDataExists(query)) {
+                    ItemData result = performSearch(query);
+                    goToNextPage(result);
+                    return true;
+                } else
+                    Toast.makeText(getApplicationContext(), "The " + query + " was not found in the database", Toast.LENGTH_LONG).show();
                 return true;
             }
         });
@@ -47,33 +49,22 @@ public class SearchPage_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String query = editText.getText().toString();
-                ItemData result = performSearch(query);
-                goToNextPage(result);
+                if (checkIfDataExists(query)) {
+                    ItemData result = performSearch(query);
+                    goToNextPage(result);
+                } else
+                    Toast.makeText(getApplicationContext(), "The " + query + " was not found in the database", Toast.LENGTH_LONG).show();
             }
         });
-
-
     }
 
     private ItemData performSearch(String query) {
-        Log.d("searching for:", query);
-        if (search(query)) {
-
+        if (checkIfDataExists(query)) {
             ItemData item = load(query);
-
-
-            Log.d("Found: ", item.name);
-            Log.d("Found info: ", item.info);
-            Log.d("Found tips: ", item.tips);
-            Log.d("Found imgFilepath: ", item.imgFilepath);
             return item;
-
         } else {
-            Log.d("Didn't find: ", query);
             return null;
         }
-
-
     }
 
     private void goToNextPage(ItemData itemData) {
@@ -84,24 +75,15 @@ public class SearchPage_Activity extends AppCompatActivity {
     }
 
     public void save(String name, String info, String tips, String filePath) {
-        //String text = mEditText.getText().toString();
         StringBuilder sb = new StringBuilder();
         String text;
         FileOutputStream fos = null;
 
         try {
-            fos = openFileOutput(name + ".txt", MODE_PRIVATE);
-
-            //text = sb.append(name).append("\n").append(info).append("\n").append(tips).append("\n").append(filePath).append("/").append(name).append(".bmp").toString();
+            fos = openFileOutput(name.toLowerCase() + ".txt", MODE_PRIVATE);
             text = sb.append(name).append("\n").append(info).append("\n").append(tips).append("\n").append(name.toLowerCase()).toString();
-
             fos.write(text.getBytes());
-
             String absFilePath = getFilesDir() + "/" + name;
-
-            //mEditText.getText().clear();
-
-            //Toast.makeText( this,  "Saved to " + absFilePath, Toast.LENGTH_LONG).show();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -122,9 +104,8 @@ public class SearchPage_Activity extends AppCompatActivity {
         ItemData retValue = new ItemData("", "", "", "");
         FileInputStream fis = null;
 
-
         try {
-            fis = openFileInput(fileName + ".txt");
+            fis = openFileInput(fileName.toLowerCase() + ".txt");
 
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
@@ -161,11 +142,6 @@ public class SearchPage_Activity extends AppCompatActivity {
                 imgFilepath = "";
 
 
-            //mEditText.setText(sb.toString());
-
-
-            //Toast.makeText( this,  "Loaded: " + name, Toast.LENGTH_LONG).show();
-
             retValue.name = name;
             retValue.info = info;
             retValue.tips = tips;
@@ -192,17 +168,14 @@ public class SearchPage_Activity extends AppCompatActivity {
     public void create(String name, String info, String tips, String filePath) {
         //if (!Objects.equals(load(name).tips, ""))
         {
-            //Toast.makeText( this,  "creating " + name , Toast.LENGTH_LONG).show();
 
             save(name, info, tips, filePath);
         }
     }
 
-    public boolean search(String name) {
+    public boolean checkIfDataExists(String name) {
         boolean retVal = false;
-
         if (!Objects.equals(load(name).tips, "")) {
-            //Toast.makeText( this,  "Found: " + load(name).tips, Toast.LENGTH_LONG).show();
 
             retVal = true;
         }
@@ -214,7 +187,7 @@ public class SearchPage_Activity extends AppCompatActivity {
 
         create("testItem",
                 "this is info",
-                "Dont water", "");
+                "Don't water", "");
         create("Orchids",
                 "Orchids are non-woody perennial plants are generally terrestrial herbs (i.e., growing on other plants rather than rooted in soil). Those attached to other plants often are vine-like and have a spongy root covering that absorbs water from the surrounding air.",
                 "Orchids require shallow planting. These plants prefer bright, indirect light. Orchids need ample water but should be allowed to dry out some between watering.", "");

@@ -11,9 +11,6 @@ import android.widget.TextView;
 
 public class ResultPage_Activity extends AppCompatActivity {
 
-    private String flowerPictureUri;
-    private String drawableUri = "@drawable/";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +31,11 @@ public class ResultPage_Activity extends AppCompatActivity {
         flowerDescription.setText(itemData.info);
         flowerTips.setText(itemData.tips);
 
-        flowerPictureUri = drawableUri + (itemData.imgFilepath);
+        String drawableUri = "@drawable/";
+        String flowerPictureUri = drawableUri + (itemData.imgFilepath);
         int imageResource = getResources().getIdentifier(flowerPictureUri, null, getPackageName());
 
         Drawable res = getResources().getDrawable(imageResource);
         flowerPicture.setImageDrawable(res);
-
     }
 }
