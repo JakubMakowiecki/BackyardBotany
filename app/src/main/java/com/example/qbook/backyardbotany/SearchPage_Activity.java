@@ -20,14 +20,16 @@ import java.util.Objects;
 
 
 public class SearchPage_Activity extends AppCompatActivity {
+    private EditText editText;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_page);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        Button button = (Button) findViewById(R.id.button);
-        final EditText editText = (EditText) findViewById(R.id.editText);
+        button = (Button) findViewById(R.id.button);
+        editText = (EditText) findViewById(R.id.editText);
 
         startDB();
 
@@ -56,6 +58,12 @@ public class SearchPage_Activity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "The " + query + " was not found in the database", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     private ItemData performSearch(String query) {
@@ -104,8 +112,9 @@ public class SearchPage_Activity extends AppCompatActivity {
         ItemData retValue = new ItemData("", "", "", "");
         FileInputStream fis = null;
 
+
         try {
-            fis = openFileInput(fileName.toLowerCase() + ".txt");
+            fis = openFileInput(parseStringQuery(fileName) + ".txt");
 
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
@@ -163,6 +172,12 @@ public class SearchPage_Activity extends AppCompatActivity {
         }
 
         return retValue;
+    }
+
+    private String parseStringQuery(String inputQuery) {
+        String outputQuery = inputQuery.toLowerCase();
+        outputQuery = outputQuery.replaceAll("\\s", "");
+        return outputQuery;
     }
 
     public void create(String name, String info, String tips, String filePath) {
