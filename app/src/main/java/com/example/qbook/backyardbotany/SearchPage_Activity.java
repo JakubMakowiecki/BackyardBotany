@@ -55,15 +55,15 @@ public class SearchPage_Activity extends AppCompatActivity {
                     ItemData result = performSearch(query);
                     goToNextPage(result);
                 } else
-                    Toast.makeText(getApplicationContext(), "The " + query + " was not found in the database", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "The \"" + query + "\" was not found in the database", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
+    protected void onRestart() {
+        super.onRestart();
+        editText.setText("");
     }
 
     private ItemData performSearch(String query) {
