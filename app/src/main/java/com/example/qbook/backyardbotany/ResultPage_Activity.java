@@ -28,8 +28,9 @@ public class ResultPage_Activity extends AppCompatActivity {
         TextView flowerTips = findViewById(R.id.flower_tips);
         ImageView flowerPicture = findViewById(R.id.flower_picture);
 
+
         flowerDescription.setText(itemData.info);
-        flowerTips.setText(itemData.tips);
+        flowerTips.setText(parseTips(itemData.tips));
 
         String drawableUri = "@drawable/";
         String flowerPictureUri = drawableUri + (itemData.imgFilepath);
@@ -37,5 +38,10 @@ public class ResultPage_Activity extends AppCompatActivity {
 
         Drawable res = getResources().getDrawable(imageResource);
         flowerPicture.setImageDrawable(res);
+    }
+
+    private String parseTips(String input) {
+        String parsedString = "•" + input.replaceAll("\\. ", ".\r\n•");
+        return parsedString;
     }
 }
