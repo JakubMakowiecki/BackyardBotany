@@ -41,7 +41,7 @@ public class ResultPage_Activity extends AppCompatActivity {
     }
 
     private String parseTips(String input) {
-        String parsedString = "•" + input.replaceAll("\\. ", ".\r\n•");
+        String parsedString = "• " + input.replaceAll("\\. ", ".\r\n• ");
         return parsedString;
     }
 }
