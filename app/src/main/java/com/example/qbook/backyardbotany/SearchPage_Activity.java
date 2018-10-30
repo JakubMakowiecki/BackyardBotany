@@ -1,8 +1,12 @@
 package com.example.qbook.backyardbotany;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -26,7 +30,6 @@ public class SearchPage_Activity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         Button button = findViewById(R.id.button);
         editText = findViewById(R.id.editText);
-        //qrScanButton = findViewById(R.id.scanQrButton);
 
         databaseFunctionality = new DatabaseFunctionalityClass(getApplicationContext());
         databaseFunctionality.startDB();
@@ -50,9 +53,15 @@ public class SearchPage_Activity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(SearchPage_Activity.this, ScanQrCodeActivity.class);
-                startActivityForResult(intent, 0);
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(SearchPage_Activity.this, new String[]{Manifest.permission.CAMERA}, PackageManager.PERMISSION_GRANTED);
+                } else {
+                    Intent intent = new Intent();
+                    intent.setClass(SearchPage_Activity.this, ScanQrCodeActivity.class);
+                    startActivityForResult(intent, 0);
+                }
+
             }
         });
     }
