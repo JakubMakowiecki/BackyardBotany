@@ -16,7 +16,7 @@ public class ResultPage_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_page);
         Intent i = getIntent();
-        ItemData itemData = (ItemData) i.getParcelableExtra("flowerData");
+        ItemData itemData = i.getParcelableExtra("flowerData");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -32,8 +32,7 @@ public class ResultPage_Activity extends AppCompatActivity {
         flowerDescription.setText(itemData.info);
         flowerTips.setText(parseTips(itemData.tips));
 
-        String drawableUri = "@drawable/";
-        String flowerPictureUri = drawableUri + (itemData.imgFilepath);
+        String flowerPictureUri = "@drawable/" + (itemData.imgFilepath);
         int imageResource = getResources().getIdentifier(flowerPictureUri, null, getPackageName());
 
         Drawable res = getResources().getDrawable(imageResource);

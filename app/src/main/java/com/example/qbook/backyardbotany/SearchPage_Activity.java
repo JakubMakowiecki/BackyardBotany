@@ -2,7 +2,9 @@ package com.example.qbook.backyardbotany;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +17,6 @@ import java.util.Objects;
 
 public class SearchPage_Activity extends AppCompatActivity {
     private EditText editText;
-    private Button button;
     private DatabaseFunctionalityClass databaseFunctionality;
 
     @Override
@@ -23,11 +24,11 @@ public class SearchPage_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_page);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        button = findViewById(R.id.button);
+        Button button = findViewById(R.id.button);
         editText = findViewById(R.id.editText);
+        //qrScanButton = findViewById(R.id.scanQrButton);
 
         databaseFunctionality = new DatabaseFunctionalityClass(getApplicationContext());
-
         databaseFunctionality.startDB();
 
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -44,6 +45,27 @@ public class SearchPage_Activity extends AppCompatActivity {
                 startSearchProcess(editText.getText().toString());
             }
         });
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(SearchPage_Activity.this, ScanQrCodeActivity.class);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                Log.d("sent text:", data.getStringExtra("qr_code_text"));
+                startSearchProcess(data.getStringExtra("qr_code_text"));
+            }
+        }
     }
 
     private void startSearchProcess(String query) {
