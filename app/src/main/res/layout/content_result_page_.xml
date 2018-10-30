@@ -80,7 +80,6 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.031"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/flower_picture" />
 
@@ -96,7 +95,6 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.034"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/flower_description" />
 

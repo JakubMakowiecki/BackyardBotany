@@ -28,21 +28,15 @@ public class SearchPage_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_page);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        button = (Button) findViewById(R.id.button);
-        editText = (EditText) findViewById(R.id.editText);
+        button = findViewById(R.id.button);
+        editText = findViewById(R.id.editText);
 
         startDB();
 
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                String query = editText.getText().toString();
-                if (checkIfDataExists(query)) {
-                    ItemData result = performSearch(query);
-                    goToNextPage(result);
-                    return true;
-                } else
-                    Toast.makeText(getApplicationContext(), "The " + query + " was not found in the database", Toast.LENGTH_LONG).show();
+                onSearchStarted(editText.getText().toString());
                 return true;
             }
         });
@@ -50,14 +44,17 @@ public class SearchPage_Activity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String query = editText.getText().toString();
-                if (checkIfDataExists(query)) {
-                    ItemData result = performSearch(query);
-                    goToNextPage(result);
-                } else
-                    Toast.makeText(getApplicationContext(), "The \"" + query + "\" was not found in the database", Toast.LENGTH_LONG).show();
+                onSearchStarted(editText.getText().toString());
             }
         });
+    }
+
+    private void onSearchStarted(String query) {
+        if (checkIfDataExists(query)) {
+            ItemData result = performSearch(query);
+            goToNextPage(result);
+        } else
+            Toast.makeText(getApplicationContext(), "The \"" + query + "\" was not found in the database", Toast.LENGTH_SHORT).show();
     }
 
     @Override
