@@ -36,11 +36,13 @@ public class ScanQrCodeActivity extends AppCompatActivity implements ZXingScanne
     @Override
     public void handleResult(Result rawResult) {
         if (rawResult.getBarcodeFormat().toString().equals("QR_CODE")) {
-            Log.d("scanned: ", rawResult.getText());
-            Intent intent = new Intent();
-            intent.putExtra("qr_code_text", rawResult.getText());
-            setResult(Activity.RESULT_OK, intent);
-            finish();
+            if (rawResult.getText() != null) {
+                Log.d("scanned: ", rawResult.getText());
+                Intent intent = new Intent();
+                intent.putExtra("qr_code_text", rawResult.getText());
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
         } else {
             mScannerView.resumeCameraPreview(this);
         }
